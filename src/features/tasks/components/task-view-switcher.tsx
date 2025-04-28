@@ -20,6 +20,7 @@ import { taskColumnsDef } from "./columns";
 import { DataKanban } from "./data-kanban";
 import { useBulkUpdateTasks } from "../api/use-bulk-update-task";
 import DataCalendar from "./data-calendar";
+import { useProjectId } from "@/features/projects/hooks/use-project-id";
 
 interface TaskViewSwitcherProps {
   hideProjectFilter?: boolean;
@@ -31,10 +32,11 @@ const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) => {
     defaultValue: "table",
   });
   const workspaceId = useWorkspaceId();
+  const paramProjectId = useProjectId()
   const { open } = useModal({ urlKey: "create-task" });
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
     workspaceId,
-    projectId,
+    projectId: paramProjectId || projectId,
     assigneeId,
     status: status ?? undefined,
     dueDate,

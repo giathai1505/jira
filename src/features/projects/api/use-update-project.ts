@@ -1,10 +1,9 @@
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { client } from "@/lib/rpc";
 import { InferRequestType, InferResponseType } from "hono";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { client } from "@/lib/rpc";
 
 type ResponseType = InferResponseType<
   (typeof client.api.projects)[":projectId"]["$patch"],
@@ -16,7 +15,6 @@ type RequestType = InferRequestType<
 >;
 
 export const useUpdateProject = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -33,13 +31,12 @@ export const useUpdateProject = () => {
       return await response.json();
     },
     onSuccess: ({ data }) => {
-      toast.success("Project updated!");
-      router.refresh();
+      toast.success("Project updated");
       queryClient.invalidateQueries({ queryKey: ["projects"] });
-      queryClient.invalidateQueries({ queryKey: ["projects", data.$id] });
+      queryClient.invalidateQueries({ queryKey: ["project", data.$id] });
     },
     onError: () => {
-      toast.error("Fail to create a project!");
+      toast.error("Fail to update project");
     },
   });
   return mutation;

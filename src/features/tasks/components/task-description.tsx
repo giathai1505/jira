@@ -20,6 +20,10 @@ const TaskDescription = ({ task }: TaskDescriptionProps) => {
     mutate({
       json: { description: value },
       param: { taskId: task.$id },
+    }, {
+      onSuccess: () => {
+        setIsEditing(false)
+      }
     });
   };
 
@@ -55,7 +59,7 @@ const TaskDescription = ({ task }: TaskDescriptionProps) => {
             onChange={(e) => setValue(e.target.value)}
             disabled={isPending}
           />
-          <Button size="sm" className="w-fit ml-auto " onClick={handleSave}>
+          <Button size="sm" className="w-fit ml-auto " onClick={handleSave} disabled={isPending}>
             {isPending ? "Saving..." : "Save Changes"}
           </Button>
         </div>

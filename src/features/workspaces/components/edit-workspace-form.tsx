@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useRef } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
+import React, { useRef } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import { ArrowLeftIcon, CopyIcon, ImageIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -115,11 +115,6 @@ const EditWorkspaceForm = ({
 
     mutate(
       { form: finalValues, param: { workspaceId: initialValues.$id } },
-      {
-        onSuccess: () => {
-          form.reset();
-        },
-      }
     );
   };
 

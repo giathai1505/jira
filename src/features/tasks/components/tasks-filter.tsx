@@ -59,8 +59,6 @@ const TaskFilter = ({ hideProjectFilter }: TaskFilterProps) => {
     return null;
   }
 
-  console.log("=============== hideProjectFilter: ", hideProjectFilter);
-
   return (
     <div className="flex flex-col lg:flex-row gap-2">
       <Select

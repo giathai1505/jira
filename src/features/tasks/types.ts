@@ -1,6 +1,6 @@
-import { snakeCaseToTitleCase } from "@/lib/utils";
 import { Models } from "node-appwrite";
-import { Project } from "../projects/types";
+
+import { snakeCaseToTitleCase } from "@/lib/utils";
 
 export enum TaskStatus {
   BACKLOG = "BACKLOG",

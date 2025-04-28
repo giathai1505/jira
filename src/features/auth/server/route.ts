@@ -33,9 +33,11 @@ const app = new Hono()
     const { email, password, name } = c.req.valid("json");
 
     const { account } = await createAdminClient();
+
     await account.create(ID.unique(), email, password, name);
 
     const session = await account.createEmailPasswordSession(email, password);
+
     setCookie(c, AUTH_COOKIE, session.secret, {
       path: "/",
       httpOnly: true,
@@ -43,6 +45,7 @@ const app = new Hono()
       sameSite: "strict",
       maxAge: 60 * 60 * 24 * 30,
     });
+
     return c.json({ success: true });
   })
   .post("/logout", sessionMiddleware, async (c) => {
